@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Yerianny - Mis XV Años</title>
+    <link rel="preload" as="image" href="foto0.jpg">
+    <link rel="preload" as="image" href="intro-poster.jpg">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="CCSB.css?v=2">
+    <link rel="stylesheet" href="intro.css?v=2">
+    <script src="https://cdn.lordicon.com/lordicon.js"></script>
+    <style>
+        /* Carrusel: 3 imágenes simultáneamente con foto central destacada */
+        .carousel-track-container {
+            overflow: hidden;
+            width: 100%;
+            position: relative;
+        }
+        .carousel-track {
+            display: flex;
+            transition: transform 0.5s ease;
+            width: 100%;
+            overflow: visible;
+        }
+        .carousel-item {
+            flex: 0 0 33.333%; /* 3 imágenes por fila en PC */
+            box-sizing: border-box;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 0; /* usamos gap del track para separación */
+        }
+        .carousel-item img {
+            display: block;
+            width: auto;
+            height: auto;
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+            border-radius: 0;
+            box-shadow: 0 10px 24px rgba(169,95,115,0.35);
+            transition: transform 0.25s ease, box-shadow 0.25s ease;
+        }
+
+        /* Marco tipo polaroid ajustado al tamaño real de cada foto:
+           delgado en los tres lados y un poco más grueso en la base. */
+        .framed-photo {
+            width: auto !important;
+            height: auto !important;
+            max-width: 100% !important;
+            max-height: 100% !important;
+            box-sizing: border-box !important;
+            margin: 0 auto;
+            object-fit: contain !important;
+            background: #A95F73 !important;
+            border: 6px solid #A95F73 !important;
+            border-bottom-width: 20px !important;
+        }
+
+        @media (min-width: 769px) {
+            .carousel-item.is-center .framed-photo {
+                transform: scale(1.12) rotate(-0.2deg);
+                box-shadow: 0 34px 68px rgba(201,168,93,0.45);
+            }
+        }
+        
+        /* Mobile: una imagen centrada */
+        @media (max-width: 768px) {
+            .carousel-item {
+                flex: 0 0 100% !important; /* 1 imagen por vista en móvil */
+                padding: 0 6px !important;
+                height: 380px !important;
+                display: flex !important;
+                justify-content: center !important;
+                align-items: center !important;
+            }
+            .carousel-item img {
+                width: auto !important;
+                height: auto !important;
+                max-width: 100% !important;
+                max-height: 380px !important;
+                object-fit: contain !important;
+                transform: none !important;
+            }
+            .framed-photo {
+                border-width: 4px !important;
+                border-bottom-width: 14px !important;
+            }
+            
+            .carousel-track-container {
+                height: auto !important;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .carousel-item img {
+                width: auto !important;
+                height: auto !important;
+                max-width: 100% !important;
+                max-height: 320px !important;
+                object-fit: contain !important;
+                border-radius: 0;
+                transform: none !important;
+            }
+            .framed-photo {
+                border-width: 3px !important;
+                border-bottom-width: 10px !important;
+            }
+            
+            .carousel-item {
+                flex: 0 0 100% !important;
+                padding: 0 8px !important;
+                height: 320px !important;
+            }
+            
+            .carousel-track-container {
+                height: auto !important;
+            }
+        }
+        .carousel-container {
+            position: relative;
+            width: 100%;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        .carousel-btn {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: #fff;
+            border: none;
+            font-size: 2rem;
+            cursor: pointer;
+            z-index: 2;
+            padding: 0 10px;
+            border-radius: 50%;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+        }
+
+        /* Ajuste temporal: mantener altura visible sin tocar el attachment */
+        @media (min-width: 1025px) {
+            .hero-section {
+                background-image: url('foto0.jpg') !important;
+            }
+        }
+
+    </style>
+</head>
+<body>
+    <div class="main-center">
+        <!-- Video de introducción: en pausa hasta que tocan la pantalla -->
+        <div id="introLayer" class="intro-layer">
+            <div class="intro-backdrop"></div>
+            <video id="introVideo" class="intro-video" muted playsinline webkit-playsinline preload="auto" poster="intro-poster.jpg">
+                <source src="intro.mp4" type="video/mp4">
+            </video>
+            <div id="introTap" class="intro-tap" role="button" tabindex="0" aria-label="Toca para abrir tu invitación">
+                <span class="intro-tap-ring"></span>
+                <span class="intro-tap-text">Toca para abrir tu invitación</span>
+            </div>
+            <button id="introSkip" class="intro-skip" type="button">Saltar intro</button>
+        </div>
+
+        <!-- Destello dorado + pétalos de la transición -->
+        <div id="introFlash" class="intro-flash" aria-hidden="true"></div>
+        <canvas id="magicCanvas" class="magic-canvas" aria-hidden="true"></canvas>
+
+        <!-- Reproductor de música (archivo local, sin YouTube) -->
+        <audio id="bgMusic" src="musica.mp3" preload="auto" loop></audio>
+        <div id="musicPlayer" class="music-player" style="display: none;">
+            <button id="musicToggle" class="music-button modern-icon" title="Reproducir/Pausar música">
+                <svg id="volumeIcon" width="20" height="20" viewBox="0 0 24 24" fill="none">
+                    <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5" fill="#A95F73" stroke="#fff" stroke-width="1"></polygon>
+                    <path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.08" stroke="#A95F73" stroke-width="2"></path>
+                    <circle cx="6.5" cy="12" r="1" fill="#D98FA3"/>
+                </svg>
+            </button>
+        </div>
+
+        <!-- Hero Section -->
+        <div class="hero-section">
+            <img class="hero-bg" src="foto0.jpg" alt="Portada XV años de Yerianny">
+            <div class="hero-overlay"></div>
+            <div class="top-garland">
+                <img src="separador-rosas.png" alt="">
+            </div>
+            <div class="hero-content">
+                <div class="hero-text">
+                    <div class="date date-hidden" aria-hidden="true">20.12.2026</div>
+                    <h1 class="names">Yerianny</h1>
+                    <div class="scroll-indicator">
+                        <div class="scroll-mouse">
+                            <div class="scroll-wheel"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Content -->
+        <div class="content">
+        <div class="section-divider">
+            <img src="separador-rosas.png" alt="">
+        </div>
+        <!-- Countdown -->
+        <section class="countdown-section">
+            <h2 class="section-title">Faltan</h2>
+            <div class="countdown-container">
+                <div class="countdown-item">
+                    <div class="countdown-number" id="days">00</div>
+                    <div class="countdown-label">DÍAS</div>
+                </div>
+                <div class="countdown-item">
+                    <div class="countdown-number" id="hours">00</div>
+                    <div class="countdown-label">HORAS</div>
+                </div>
+                <div class="countdown-item">
+                    <div class="countdown-number" id="minutes">00</div>
+                    <div class="countdown-label">MINUTOS</div>
+                </div>
+                <div class="countdown-item">
+                    <div class="countdown-number" id="seconds">00</div>
+                    <div class="countdown-label">SEGUNDOS</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Fecha y Lugar -->
+        <div class="section-divider">
+            <img src="separador-rosas.png" alt="">
+        </div>
+        <section class="events-section">
+            <div class="events-container events-container-single">
+                <!-- Fiesta de XV -->
+                <div class="event-card">
+                    <div class="event-icon modern-icon">
+                        <img src="icono-corona.png" alt="Corona dorada" class="icon-img">
+                    </div>
+                    <h3 class="event-title">Fiesta de XV Años</h3>
+                    <div class="event-details">
+                        <h4>Día</h4>
+                        <p>Domingo 20 de Diciembre - 18:00hs</p>
+                        <p class="event-punctuality">La recepción sigue a la bienvenida</p>
+                    </div>
+                    <div class="event-details">
+                        <h4>Lugar</h4>
+                        <p>Salón de Fiestas Ejemplo</p>
+                        <p class="event-address">Av. Modelo #456, Sector Ejemplo, Santo Domingo</p>
+                    </div>
+                    <button class="btn-wedding" onclick="openLocation('reception')">¿Cómo llegar?</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Photo Gallery -->
+        <div class="section-divider">
+            <img src="separador-rosas.png" alt="">
+        </div>
+        <section class="gallery-section">
+            <div class="gallery-container">
+                <h2 class="section-title">Retratos de mis 15 Años</h2>
+                <p class="section-subtitle">Cada foto guarda un pedacito de esta historia que hoy florece</p>
+                
+                <div class="camera-icon modern-icon">
+                    <svg width="70" height="70" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <rect x="6" y="18" width="52" height="36" rx="6" fill="#A95F73"/>
+                        <rect x="24" y="10" width="16" height="10" rx="2" fill="#A95F73"/>
+                        <circle cx="32" cy="36" r="11" fill="#FFF9F2"/>
+                        <circle cx="32" cy="36" r="6" fill="#A95F73"/>
+                        <circle cx="48" cy="26" r="2.5" fill="#FFF9F2"/>
+                    </svg>
+                </div>
+                <!-- Carrusel -->
+                <div class="carousel-container">
+                  <button class="carousel-btn carousel-prev" id="prevBtn">❮</button>
+                  <div class="carousel-track-container">
+                    <div class="carousel-track" id="carouselTrack">
+                      <div class="carousel-item">
+                        <img class="framed-photo" src="foto1.jpg" alt="Foto 1 de los XV años">
+                      </div>
+                      <div class="carousel-item">
+                        <img class="framed-photo" src="foto2.jpg" alt="Foto 2 de los XV años">
+                      </div>
+                      <div class="carousel-item">
+                        <img class="framed-photo" src="foto3.jpg" alt="Foto 3 de los XV años">
+                      </div>
+                      <div class="carousel-item">
+                        <img class="framed-photo" src="foto4.jpg" alt="Foto 4 de los XV años">
+                      </div>
+                      <div class="carousel-item">
+                        <img class="framed-photo" src="foto5.jpg" alt="Foto 5 de los XV años">
+                      </div>
+                      <div class="carousel-item">
+                        <img class="framed-photo" src="foto6.jpg" alt="Foto 6 de los XV años">
+                      </div>
+                    </div>
+                  </div>
+                  <button class="carousel-btn carousel-next" id="nextBtn">❯</button>
+                </div>
+
+                <div class="carousel-counter">
+                  <span id="currentSlide">1</span> / <span id="totalSlides">6</span> fotos
+                </div>
+
+            </div>
+        </section>
+
+        <!-- Party Information -->
+        <div class="section-divider">
+            <img src="separador-rosas.png" alt="">
+        </div>
+        <section class="party-section">
+            <div class="party-container">
+                <h2 class="section-title">Fiesta</h2>
+                <p class="section-subtitle">Hagamos juntos una fiesta épica. Aquí algunos detalles a tener en cuenta.</p>
+
+                <div class="party-grid">
+                    <div class="party-card">
+                        <div class="party-icon modern-icon bowtie-icon">
+                            <img src="icono-vestimenta.png" alt="Vestido y traje" class="icon-img">
+                        </div>
+                        <h3>Código de Vestimenta</h3>
+                        <button class="btn-wedding" onclick="showDressCode()">Ver más</button>
+                    </div>
+
+                    <div class="party-card">
+                        <div class="party-icon modern-icon">
+                            <svg width="70" height="70" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <rect x="6" y="18" width="52" height="36" rx="6" fill="#A95F73"/>
+                                <rect x="24" y="10" width="16" height="10" rx="2" fill="#A95F73"/>
+                                <circle cx="32" cy="36" r="11" fill="#FFF9F2"/>
+                                <circle cx="32" cy="36" r="6" fill="#A95F73"/>
+                                <circle cx="48" cy="26" r="2.5" fill="#FFF9F2"/>
+                            </svg>
+                        </div>
+                        <h3>Comparte tus Fotos</h3>
+                        <p>Ayúdanos a capturar cada momento, sube las fotos que tomes durante la fiesta.</p>
+                        <button class="btn-wedding" onclick="sharePhotos()">Subir Fotos</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Gifts -->
+        <div class="section-divider">
+            <img src="separador-rosas.png" alt="">
+        </div>
+        <section class="gifts-section">
+            <div class="gifts-container">
+                <h2 class="section-title">Regalos</h2>
+                <p class="section-subtitle">Si deseas regalarme algo más que tu hermosa presencia.</p>
+                
+                <div class="gift-icon modern-icon">
+                    <img src="icono-regalo.png" alt="Regalo" class="icon-img">
+                </div>
+
+                <button class="btn-wedding" onclick="showGifts()">Ver más</button>
+            </div>
+        </section>
+
+        <!-- RSVP -->
+        <div class="section-divider">
+            <img src="separador-rosas.png" alt="">
+        </div>
+        <section class="rsvp-section">
+            <div class="rsvp-container">
+                <h2 class="section-title">Confirma tu Asistencia</h2>
+                <p class="section-subtitle">Por favor confirma tu asistencia antes del 1 de Diciembre de 2026</p>
+                
+                <div class="whatsapp-icon modern-icon">
+                    <svg width="80" height="80" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <rect x="8" y="4" width="32" height="40" rx="3" fill="#A95F73"/>
+                        <path d="M28 4v9a3 3 0 0 0 3 3h9" fill="#3A2A1C"/>
+                        <rect x="14" y="20" width="20" height="2.4" rx="1.2" fill="#fff"/>
+                        <rect x="14" y="26" width="20" height="2.4" rx="1.2" fill="#fff"/>
+                        <rect x="14" y="32" width="13" height="2.4" rx="1.2" fill="#fff"/>
+                        <circle cx="34" cy="34" r="8" fill="#fff"/>
+                        <path d="M30.5 34l2.3 2.3 4.3-4.6" stroke="#A95F73" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+                    </svg>
+                </div>
+
+                <button class="btn-wedding" onclick="confirmAttendance()">Confirmar Asistencia</button>
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <div class="section-divider">
+            <img src="separador-rosas.png" alt="">
+        </div>
+        <footer class="footer">
+            <div class="footer-content">
+                <p>Con cariño,</p>
+                <h3>Yerianny</h3>
+                <p class="footer-date">20 de Diciembre, 2026</p>
+            </div>
+        </footer>
+        </div>
+
+        <!-- Modal Dress Code -->
+        <div id="dresscodeModal" class="modal-overlay" onclick="closeDressCodeModal(event)">
+            <div class="dresscode-modal" onclick="event.stopPropagation()">
+                <button class="modal-close" onclick="closeDressCodeModal()" aria-label="Cerrar">&times;</button>
+                <h2 class="modal-title-dark">Código de Vestimenta</h2>
+                <p class="modal-text-dark">No blanco · No amarillo · No rojo</p>
+                <div class="dresscode-colors">
+                    <span class="color-dot" style="background:#ffffff;" title="No blanco"></span>
+                    <span class="color-dot" style="background:#f4d03f;" title="No amarillo"></span>
+                    <span class="color-dot" style="background:#e74c3c;" title="No rojo"></span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Toast notification -->
+        <div id="toast" class="toast">
+            <div id="toastContent"></div>
+        </div>
+
+        <script>
+        (function() {
+            try {
+                if ('caches' in window) {
+                    caches.keys().then(keys => keys.forEach(k => caches.delete(k))).catch(() => {});
+                }
+                if ('serviceWorker' in navigator) {
+                    navigator.serviceWorker.getRegistrations().then(regs => regs.forEach(r => r.unregister())).catch(() => {});
+                }
+            } catch(e) {}
+        })();
+        </script>
+        <script src="JAVAB.js?v=20" defer></script>
+        <script src="intro.js?v=2" defer></script>
+</body>
+</html>

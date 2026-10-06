@@ -1,0 +1,1632 @@
+/* Variables CSS */
+:root {
+    --background: 32 100% 97%; /* #FFF9F2 - crema principal */
+    --foreground: 351 12% 33%; /* #5E4A4D - café rosado, texto principal */
+    --primary: 351 12% 33%;
+    --primary-foreground: 32 100% 97%;
+    --gold: 344 30% 52%; /* #A95F73 - rosa oscuro/malva, acento principal */
+    --gold-light: 344 49% 71%; /* #D98FA3 - rosa malva claro, detalles secundarios */
+    --gold-dark: 344 30% 52%; /* #A95F73 - rosa oscuro, para títulos */
+    --brown: 88 12% 60%; /* #9AA58D - verde salvia */
+    --brown-light: 88 12% 70%;
+    --brown-dark: 351 12% 33%; /* #5E4A4D - café rosado, texto principal */
+    --cream: 344 62% 93%; /* #F8E1E7 - rosa claro secundario */
+    --warm-white: 32 100% 97%; /* #FFF9F2 */
+    --blush: 344 49% 71%; /* #D98FA3 - rosa malva claro */
+    --shadow-elegant: 0 10px 30px -10px hsl(351 12% 33% / 0.15);
+    --shadow-gold: 0 4px 20px hsl(344 30% 52% / 0.35);
+}
+
+/* Reset y base */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html, body {
+    min-height: 100%;
+    width: 100%;
+    overflow-x: hidden;
+}
+
+/* Eliminar bordes en móviles */
+@media (max-width: 768px) {
+    html, body {
+        margin: 0;
+        padding: 0;
+        width: 100vw;
+        max-width: 100vw;
+        overflow-x: hidden;
+    }
+    
+    * {
+        box-sizing: border-box;
+    }
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+    background-color: #FFF9F2; /* blanco crema principal */
+    color: hsl(var(--foreground));
+    line-height: 1.6;
+    box-sizing: border-box;
+}
+
+html { background-color: #FFF9F2; }
+
+/* Tipografía */
+.names {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(1.9rem, 4.4vw, 3.6rem);
+    font-weight: 700;
+    line-height: 1.25;
+}
+
+.xv-subtitle {
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    font-size: clamp(0.95rem, 2.2vw, 1.3rem);
+    color: #A95F73;
+    margin-top: 0.35rem;
+}
+
+/* Modal de Bienvenida */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.8);
+    display: none; /* oculto por defecto: evita pantalla negra si JS falla */
+    align-items: center;
+    justify-content: center;
+    z-index: 9999;
+    backdrop-filter: blur(8px);
+}
+
+/* Nuevo diseño de bienvenida tipo portada */
+.welcome-hero {
+    text-align: center;
+    color: #D98FA3;
+    max-width: 900px;
+    padding: 2rem;
+}
+
+.welcome-title {
+    font-family: 'Playfair Display', serif;
+    font-weight: 600;
+    line-height: 1.1;
+    letter-spacing: 0.5px;
+    color: #D98FA3; /* dorado claro para contraste sobre fondo oscuro */
+    font-size: clamp(1.8rem, 4vw, 2.6rem);
+    margin-bottom: 1rem;
+}
+
+.welcome-title-sm {
+    font-size: clamp(1.35rem, 3vw, 1.9rem);
+    margin-bottom: 1.1rem;
+}
+
+.welcome-message {
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
+    font-weight: 400;
+    color: #D98FA3;
+    font-size: clamp(0.95rem, 1.6vw, 1.15rem);
+    line-height: 1.7;
+    letter-spacing: 0.3px;
+    max-width: 560px;
+    margin: 0 auto 1.5rem;
+    position: relative;
+    padding-top: 1.25rem;
+}
+
+.welcome-message::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 60px;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, #D98FA3, transparent);
+}
+
+.welcome-note {
+    color: #a7a7a7;
+    margin-bottom: 1.25rem;
+}
+
+.welcome-actions {
+    display: flex;
+    gap: 0.75rem;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.btn-gold {
+    background-color: #A95F73;
+    color: #fff;
+    border: 2px solid #D98FA3;
+    border-radius: 9999px;
+    padding: 0.65rem 1.1rem;
+    cursor: pointer;
+    transition: transform .15s ease, box-shadow .2s ease, background-color .2s ease;
+    font-weight: 600;
+    box-shadow: 0 6px 20px rgba(169, 95, 115, 0.35);
+}
+
+.btn-gold:hover { transform: translateY(-1px); }
+
+.btn-gold-outline {
+    background: transparent;
+    color: #D98FA3;
+    border: 1px solid #D98FA3;
+    border-radius: 9999px;
+    padding: 0.65rem 1.1rem;
+    cursor: pointer;
+    transition: background-color .2s ease, color .2s ease;
+}
+
+.btn-gold-outline:hover { background-color: rgba(217,143,163,0.18); }
+
+.modal-title {
+    font-size: 1.6rem;
+    color: #fff;
+    margin-bottom: 1rem;
+    font-family: 'Playfair Display', serif;
+}
+
+.modal-names {
+    font-size: 2.1rem;
+    font-family: 'Playfair Display', serif;
+    color: #fff;
+    margin-bottom: 1rem;
+}
+
+.modal-subtitle {
+    color: #fff !important;
+    margin-bottom: 2rem;
+}
+
+.modal-icon {
+    width: 4rem;
+    height: 4rem;
+    margin: 0 auto 2rem;
+    padding: 1rem;
+    border-radius: 50%;
+    background-color: hsl(var(--gold) / 0.1);
+    border: 2px solid hsl(var(--gold));
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: hsl(var(--gold));
+}
+
+.modal-buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.btn-outline {
+    padding: 0.75rem 2rem;
+    border-radius: 9999px;
+    border: 2px solid hsl(var(--brown) / 0.3);
+    background: transparent;
+    color: hsl(var(--brown));
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-size: 1rem;
+}
+
+.btn-outline:hover {
+    background: hsl(var(--brown) / 0.1);
+    border-color: hsl(var(--brown));
+}
+
+/* Reproductor de música */
+.music-player {
+    position: fixed;
+    top: 1rem;
+    right: 1rem;
+    z-index: 1000;
+}
+
+.music-button {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    border: none;
+    background: linear-gradient(135deg, hsl(var(--brown)), hsl(var(--gold)));
+    color: white;
+    cursor: pointer;
+    box-shadow: var(--shadow-elegant);
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.music-button:hover {
+    transform: scale(1.05);
+    box-shadow: var(--shadow-gold);
+}
+
+/* Hero Section: fondo fijo detrás de todo el contenido, que se va
+   "revelando" a medida que el resto de la página se desliza encima al
+   hacer scroll. Es el mismo efecto de portada que usa boda100L. */
+.hero-section {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    height: 100svh; /* soporta barras de navegador móviles */
+    background-image: url('foto0.jpg');
+    background-size: cover;
+    background-position: center 25%;
+    background-repeat: no-repeat;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 0;
+}
+
+.hero-bg {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center 25%;
+}
+
+.hero-overlay {
+    position: absolute;
+    inset: 0;
+    background: none;
+}
+
+/* Ramo floral decorativo: arriba de todo, parcialmente
+   recortado por el borde superior de la ventana */
+.top-garland {
+    position: absolute;
+    top: -150px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: min(640px, 92vw);
+    z-index: 3;
+    pointer-events: none;
+}
+
+.top-garland img {
+    width: 100%;
+    height: auto;
+    display: block;
+}
+
+@media (max-width: 768px) {
+    .top-garland {
+        top: -75px;
+        width: min(420px, 88vw);
+    }
+}
+
+/* Separador floral entre secciones: centrado sobre la línea de unión,
+   sin recortar (mantiene su proporción original) */
+.section-divider {
+    position: relative;
+    z-index: 2;
+    height: 0;
+    overflow: visible;
+    pointer-events: none;
+}
+
+.section-divider img {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: min(480px, 82vw);
+    height: auto;
+    display: block;
+}
+
+@media (max-width: 768px) {
+    .section-divider img {
+        width: min(300px, 78vw);
+    }
+}
+
+.hero-content {
+    position: relative;
+    width: 100%;
+    max-width: 1100px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    color: hsl(var(--foreground));
+    padding: 1rem;
+    box-sizing: border-box;
+}
+
+/* Hero content sin bordes en móviles */
+@media (max-width: 768px) {
+    .hero-content {
+        width: 100vw;
+        max-width: 100vw;
+        margin: 0;
+        padding: 2rem 1rem; /* más respiración */
+        min-height: calc(100dvh - 0px);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+}
+
+.hero-text {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0;
+}
+
+/* Content */
+.content {
+    position: relative;
+    z-index: 1;
+    background: hsl(var(--background));
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    max-width: 1100px;
+    margin: 0 auto;
+    margin-top: 100vh;   /* deja ver el hero fijo hasta que el usuario hace scroll */
+    margin-top: 100svh;  /* mejor soporte de barras de navegador en móvil */
+    box-sizing: border-box;
+}
+
+/* Contenido sin bordes en móviles */
+@media (max-width: 768px) {
+    .content {
+        width: 100vw;
+        max-width: 100vw;
+        margin: 0;
+        margin-top: 100vh;
+        margin-top: 100svh;
+        padding: 0;
+    }
+}
+
+/* Sections */
+.countdown-section,
+.events-section,
+.gallery-section,
+.party-section,
+.gifts-section,
+.rsvp-section {
+    padding: 4rem 1rem;
+    background: hsl(var(--warm-white));
+    box-shadow: 0 8px 24px -8px rgba(0,0,0,0.5);
+    color: hsl(var(--foreground));
+    width: 100%;
+    max-width: 1100px;
+    margin: 0 auto;
+    box-sizing: border-box;
+}
+
+/* Eliminar bordes y ocupar 100% en móviles */
+@media (max-width: 768px) {
+    .countdown-section,
+    .events-section,
+    .gallery-section,
+    .party-section,
+    .gifts-section,
+    .rsvp-section {
+        width: 100vw;
+        max-width: 100vw;
+        margin: 0;
+        padding: 3rem 0;
+        border-radius: 0;
+    }
+    .countdown-section {
+        padding: 1.75rem 0;
+    }
+}
+
+.gallery-section,
+.gifts-section {
+    background-color: #FFF9F2;
+    box-shadow: 0 8px 24px -8px rgba(0,0,0,0.08);
+}
+
+.party-section {
+    box-shadow: 0 8px 24px -8px rgba(0,0,0,0.08);
+}
+
+/* Countdown */
+.countdown-section {
+    text-align: center;
+    background-color: #FFF9F2;
+    box-shadow: 0 8px 24px -8px rgba(0,0,0,0.08);
+    padding: 2.5rem 1rem; /* menos alto que el resto de secciones */
+}
+
+.section-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 3rem;
+    color: #A95F73;
+    margin-bottom: 1rem;
+    font-weight: 700;
+}
+
+.countdown-container {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    align-items: center;
+    gap: 0.125rem;
+    max-width: 40rem;
+    margin: 0 auto;
+    padding: 0 1rem;
+}
+
+.countdown-item {
+    text-align: center;
+    position: relative;
+}
+
+.countdown-item:not(:last-child)::after {
+    content: '';
+    position: absolute;
+    right: -0.0625rem;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 1px;
+    height: 80%;
+    background-color: #D98FA3;
+}
+
+.countdown-number {
+    font-size: clamp(1.2rem, 4vw, 2rem);
+    font-weight: 700;
+    color: #A95F73;
+    margin-bottom: 0.1rem;
+    animation: flip-in 0.6s ease-out;
+}
+
+.countdown-label {
+    font-size: clamp(0.5rem, 1.8vw, 0.7rem);
+    color: #5E4A4D;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+    font-weight: 500;
+}
+
+.countdown-separator { display: none !important; }
+
+/* Events */
+.events-container {
+    max-width: 96rem;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+    gap: 4rem;
+}
+
+.event-card {
+    text-align: center;
+}
+
+.event-icon {
+    width: 6.5rem;
+    height: 6.5rem;
+    margin: 0 auto 1.5rem;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.15));
+    animation: gentle-pulse 2s ease-in-out infinite;
+}
+
+.celebration-icon {
+    display: flex;
+    gap: 0.25rem;
+}
+
+.glass {
+    width: 1.5rem;
+    height: 2rem;
+    background-color: hsl(var(--gold));
+    border-radius: 0.125rem;
+}
+
+.event-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 2rem;
+    color: #A95F73 !important;
+    margin-bottom: 1.5rem;
+    font-weight: 700;
+    letter-spacing: 0.02em;
+    text-shadow: none;
+}
+
+/* Separadores rosa claro arriba y abajo de los títulos de evento */
+.event-title { position: relative; padding: 0.75rem 0; }
+.event-title::before,
+.event-title::after {
+    content: "";
+    position: absolute;
+    left: 10%; right: 10%;
+    height: 1px; background: #D98FA3;
+}
+.event-title::before { top: 0; }
+.event-title::after { bottom: 0; }
+
+.event-details {
+    margin-bottom: 1.5rem;
+}
+
+.event-details h4 {
+    font-size: 1.125rem;
+    font-weight: 600;
+    color: #5E4A4D;
+    margin-bottom: 0.5rem;
+}
+
+.event-details p {
+    color: #5E4A4D;
+}
+
+.event-punctuality {
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
+    font-size: 0.92rem;
+    color: #9AA58D !important;
+    letter-spacing: 0.3px;
+    margin-top: 0.35rem;
+}
+
+.events-container-single {
+    display: flex;
+    justify-content: center;
+}
+
+.events-container-single .event-card {
+    max-width: 480px;
+    width: 100%;
+}
+
+.event-address {
+    font-size: 0.875rem;
+    margin-bottom: 1rem;
+}
+
+/* Buttons */
+.btn-wedding {
+    padding: 0.75rem 2rem;
+    border-radius: 9999px;
+    border: none;
+    background: #A95F73;
+    color: #FFFFFF;
+    font-weight: 500;
+    cursor: pointer;
+    box-shadow: var(--shadow-elegant);
+    transition: all 0.3s ease;
+    font-size: 1rem;
+}
+
+.btn-wedding:hover {
+    box-shadow: 0 4px 20px rgba(169, 95, 115, 0.4);
+}
+
+/* Modern & Elegant Buttons and Icons */
+.btn-wedding,
+.btn-outline,
+.btn-music-modern,
+.carousel-btn,
+.party-card button,
+.gifts-container button,
+.rsvp-container button {
+    border-radius: 9999px !important;
+    background: linear-gradient(90deg, #A95F73 0%, #D98FA3 100%) !important;
+    color: #FFFFFF !important;
+    font-weight: 600;
+    font-size: 1.1rem;
+    box-shadow: 0 4px 18px -6px rgba(169, 95, 115, 0.35);
+    border: none;
+    transition: box-shadow 0.2s, transform 0.2s;
+    outline: none;
+    padding: 0.85rem 2.5rem;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+.btn-wedding:hover,
+.btn-outline:hover,
+.btn-music-modern:hover,
+.carousel-btn:hover,
+.party-card button:hover,
+.gifts-container button:hover,
+.rsvp-container button:hover {
+    box-shadow: 0 8px 32px -8px rgba(169, 95, 115, 0.55);
+    transform: translateY(-2px) scale(1.03);
+}
+
+/* Modern & Elegant Icons */
+.event-icon,
+.camera-icon,
+.party-icon,
+.gift-icon,
+.whatsapp-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 1.5rem;
+    width: 6.5rem;
+    height: 6.5rem;
+    padding: 0;
+    background: none !important;
+    border: none !important;
+    box-shadow: none !important;
+    transition: transform 0.2s;
+    animation: gentle-pulse 2.4s ease-in-out infinite;
+}
+
+/* Regalo: un poco más grande que el resto de los íconos */
+.gift-icon {
+    width: 8.5rem;
+    height: 8.5rem;
+}
+
+/* Imágenes usadas como íconos: tamaño uniforme, proporción respetada */
+.icon-img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    display: block;
+}
+
+/* Ajuste específico para el icono de regalo y botón */
+.gifts-container {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    text-align: center !important;
+}
+
+.gifts-container .gift-icon {
+    width: 8.5rem !important;
+    height: 8.5rem !important;
+    margin: 0 auto 3rem !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    order: 2 !important;
+}
+
+.gifts-container .section-title {
+    order: 1 !important;
+    margin-bottom: 1rem !important;
+}
+
+.gifts-container .section-subtitle {
+    order: 1 !important;
+    margin-bottom: 2rem !important;
+}
+
+.gifts-container .btn-wedding {
+    margin-top: 1rem !important;
+    display: block !important;
+    order: 3 !important;
+}
+
+/* Mismo ajuste para el ícono de WhatsApp y el botón de "Confirmar Asistencia":
+   sin esto, otra regla más arriba (.whatsapp-icon dentro de "Modern & Elegant
+   Icons") le quitaba el círculo de acento con !important y quedaba descolocado
+   respecto al resto de íconos del sitio (evento, regalo, etc.). */
+.rsvp-container {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    text-align: center !important;
+}
+
+.rsvp-container .section-title {
+    order: 1 !important;
+    margin-bottom: 1rem !important;
+}
+
+.rsvp-container .section-subtitle {
+    order: 1 !important;
+    margin-bottom: 2rem !important;
+}
+
+.rsvp-container .whatsapp-icon {
+    order: 2 !important;
+    width: 6.5rem !important;
+    height: 6.5rem !important;
+    padding: 0 !important;
+    margin: 0 auto 2rem !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    background: none !important;
+    border: none !important;
+    box-shadow: none !important;
+}
+
+.rsvp-container .btn-wedding {
+    order: 3 !important;
+    margin-top: 0.5rem !important;
+    display: inline-flex !important;
+}
+
+.event-icon svg,
+.camera-icon svg,
+.party-icon svg,
+.gift-icon svg,
+.whatsapp-icon svg {
+    color: #A95F73 !important;
+    fill: #A95F73 !important;
+}
+
+/* Icono de código de vestimenta: verde oliva (sección de información adicional) */
+.bowtie-icon svg {
+    color: #9AA58D !important;
+    fill: #9AA58D !important;
+}
+
+.event-icon:hover,
+.camera-icon:hover,
+.party-icon:hover,
+.gift-icon:hover,
+.whatsapp-icon:hover {
+    box-shadow: 0 8px 32px -8px #D98FA388;
+    transform: scale(1.05);
+}
+
+/* Gallery */
+.gallery-container {
+    max-width: 64rem;
+    margin: 0 auto;
+    text-align: center;
+}
+/* Date separators left and right */
+.hero-text .date { 
+    display: inline-flex; 
+    align-items: center; 
+    gap: 0.75rem; 
+    margin-bottom: 1rem;
+    font-size: 1.5rem;
+    font-weight: 500;
+}
+.hero-text .date::before, .hero-text .date::after {
+    content: ""; display: block; height: 1px; width: 80px; background: #fff;
+}
+.date-hidden,
+.date-hidden::before,
+.date-hidden::after {
+    visibility: hidden;
+}
+/* Line below names */
+.hero-text .names { 
+    position: relative; 
+    display: inline-block; 
+    padding-bottom: 0.5rem; 
+    margin-bottom: 1rem;
+}
+.hero-text .names::after {
+    content: ""; position: absolute; left: 5%; right: 5%; bottom: 0; height: 0.5px; background: #fff;
+}
+/* Ampersand en acento (no usado en la portada de XV, se deja por compatibilidad) */
+.hero-text .ampersand { color: #A95F73; }
+/* Decorative accent quotes above and below */
+.quote { 
+    position: relative; 
+    margin-top: 1.5rem;
+    font-size: 1.3rem;
+    font-weight: 400;
+}
+.quote::before, .quote::after {
+    position: absolute; left: 50%; transform: translateX(-50%); color: #A95F73; font-family: 'Playfair Display', serif;
+}
+.quote::before { content: "“"; top: -1.5rem; font-size: 2rem; }
+.quote::after { content: "”"; bottom: -2.5rem; font-size: 2rem; }
+/* Framed carousel images - Polaroid style */
+.framed-photo {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    box-sizing: border-box;
+    background: #A95F73;
+    border: 10px solid #A95F73; /* dorado champagne */
+    border-bottom-width: 38px; /* pie polaroid */
+    border-radius: 4px;
+    box-shadow: 0 10px 24px rgba(169,95,115,0.35);
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.section-subtitle {
+    color: #5E4A4D;
+    margin-bottom: 3rem;
+}
+
+.camera-icon {
+    width: 6.5rem;
+    height: 6.5rem;
+    margin: 0 auto 3rem;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.15));
+    animation: gentle-bounce 2s ease-in-out infinite;
+}
+
+/* Carrusel */
+.carousel-container {
+    position: relative;
+    max-width: 1200px;
+    margin: 0 auto 2rem;
+    overflow: hidden;
+}
+
+.carousel-track-container {
+    overflow: hidden;
+}
+
+.carousel-track {
+    display: flex;
+    transition: transform 0.5s ease-in-out;
+    gap: 1rem;
+    padding: 1rem;
+    width: max-content;
+}
+
+/* Cada tarjeta del carrusel */
+.carousel-item {
+    flex: 0 0 calc(100% / 3);
+    box-sizing: border-box;
+    height: 300px;
+    border-radius: 0;
+    overflow: hidden;
+}
+
+/* Imagen dentro de la tarjeta */
+.carousel-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    border-radius: 0;
+}
+
+/* Botones de navegación */
+.carousel-btn {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: rgba(255, 255, 255, 0.7);
+    border: none;
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #333;
+    transition: all 0.3s ease;
+    z-index: 2;
+}
+
+.carousel-btn:hover {
+    background: rgba(255, 255, 255, 0.9);
+    transform: translateY(-50%) scale(1.1);
+}
+
+.carousel-prev { left: 15px; }
+.carousel-next { right: 15px; }
+
+/* Contador opcional */
+.carousel-counter {
+    text-align: center;
+    color: #666;
+    font-size: 1rem;
+    margin-top: 1rem;
+}
+
+/* ============================= */
+/*  Responsive                   */
+/* ============================= */
+@media (max-width: 1024px) {
+    .carousel-track {
+        width: max-content;
+    }
+    .carousel-item {
+        flex: 0 0 33.333%;
+        height: 320px;
+        box-sizing: border-box;
+    }
+}
+
+@media (max-width: 768px) {
+    .carousel-track {
+        width: max-content;
+        padding: 0; /* quita posibles líneas por padding */
+        gap: 0.5rem;
+    }
+    .carousel-item {
+        flex: 0 0 100%;
+        height: auto;
+        box-sizing: border-box;
+    }
+    .carousel-item img {
+        box-shadow: none;
+        transform: none;
+        height: auto;
+        max-height: 320px;
+    }
+
+    .carousel-btn {
+        width: 40px;
+        height: 40px;
+        font-size: 1.2rem;
+    }
+}
+
+
+
+/* Party */
+.party-container {
+    max-width: 96rem;
+    margin: 0 auto;
+    text-align: center;
+}
+
+.party-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(230px, 270px));
+    justify-content: center;
+    gap: 2rem;
+    margin-top: 3rem;
+}
+
+.dresscode-colors {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 0.75rem;
+    margin: 0.75rem 0 1rem;
+}
+
+.color-dot {
+    position: relative;
+    display: inline-block;
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    border: 1px solid rgba(0,0,0,0.15);
+    box-shadow: 0 2px 5px rgba(0,0,0,0.25);
+}
+
+.color-dot::after {
+    content: "";
+    position: absolute;
+    inset: -1px;
+    border-radius: 50%;
+    background: linear-gradient(to top right, transparent 45%, rgba(220,20,20,0.85) 48%, rgba(220,20,20,0.85) 52%, transparent 55%);
+}
+
+.party-card {
+    padding: 3rem 1.75rem;
+    border: 2px solid hsl(var(--gold) / 0.2);
+    border-radius: 2rem;
+    background-color: hsl(var(--warm-white));
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+    text-align: center;
+}
+
+.party-card:hover {
+    box-shadow: 0 10px 15px rgba(0, 0, 0, 0.2);
+}
+
+.party-icon {
+    width: 6.5rem;
+    height: 6.5rem;
+    margin: 0 auto 1.5rem;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.15));
+    animation: gentle-pulse 2s ease-in-out infinite;
+}
+
+.party-card h3 {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: #A95F73;
+    margin-bottom: 1rem;
+}
+
+.party-card p {
+    color: #5E4A4D;
+    margin-bottom: 1.5rem;
+}
+
+/* Gifts */
+.gifts-container,
+.rsvp-container {
+    max-width: 32rem;
+    margin: 0 auto;
+    text-align: center;
+}
+
+.gift-icon,
+.whatsapp-icon {
+    width: 6.5rem;
+    height: 6.5rem;
+    margin: 0 auto 2rem;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.15));
+    animation: gentle-bounce 2s ease-in-out infinite;
+}
+
+/* Regalo: un poco más grande que el resto de los íconos */
+.gift-icon {
+    width: 8.5rem;
+    height: 8.5rem;
+}
+
+.whatsapp-icon {
+    animation: gentle-pulse 2s ease-in-out infinite;
+}
+
+/* Icono "Comparte tus Fotos" estático, sin animación */
+.static-icon {
+    animation: none !important;
+}
+.static-icon lord-icon {
+    pointer-events: none;
+}
+
+/* RSVP */
+.hashtag {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #5E4A4D;
+    margin-bottom: 2rem;
+}
+
+/* Footer */
+.footer {
+    background-color: #F8E1E7; /* blanco cálido secundario */
+    color: #5E4A4D;
+    padding: 2rem 1rem;
+    text-align: center;
+    width: 100%;
+    max-width: 1100px;
+    margin: 0 auto;
+    box-sizing: border-box;
+}
+
+.footer-content h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.5rem;
+    margin: 0.5rem 0;
+}
+
+.footer-date {
+    color: hsl(var(--gold));
+    font-size: 0.875rem;
+    margin-top: 1rem;
+}
+
+/* Modal Dress Code */
+.dresscode-modal {
+    position: relative;
+    max-width: 420px;
+    width: 90%;
+    background: linear-gradient(135deg, rgba(17,17,17,0.96), rgba(34,34,34,0.96));
+    border: 1px solid hsl(var(--gold) / 0.6);
+    border-radius: 16px;
+    padding: 2.5rem 2rem 2rem;
+    text-align: center;
+    box-shadow: 0 20px 50px rgba(0,0,0,0.4), 0 0 0 1px rgba(255,255,255,0.04) inset;
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+}
+
+.modal-title-dark {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.6rem;
+    color: #A95F73;
+    margin-bottom: 1rem;
+}
+
+.modal-text-dark {
+    color: #fff;
+    font-size: 1.05rem;
+}
+
+.dresscode-modal .dresscode-colors {
+    margin: 1.25rem 0 0;
+}
+
+.modal-close {
+    position: absolute;
+    top: 0.6rem;
+    right: 0.9rem;
+    background: transparent;
+    border: none;
+    color: #fff;
+    font-size: 1.75rem;
+    line-height: 1;
+    cursor: pointer;
+    transition: color 0.2s ease;
+}
+
+.modal-close:hover {
+    color: #A95F73;
+}
+
+/* Toast */
+.toast {
+    position: fixed;
+    top: 5rem;
+    right: 1rem;
+    background: linear-gradient(135deg, rgba(17,17,17,0.92), rgba(34,34,34,0.92));
+    border: 1px solid hsl(var(--gold) / 0.6);
+    border-radius: 12px;
+    padding: 1rem 1.25rem;
+    box-shadow: 0 12px 24px rgba(0,0,0,0.3), 0 0 0 1px rgba(255,255,255,0.04) inset, 0 0 0 1px rgba(199,152,22,0.18);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    color: #fff;
+    z-index: 1000;
+    opacity: 0;
+    transform: translateX(100%);
+    transition: all 0.3s ease;
+    max-width: 320px;
+}
+
+.toast.show {
+    opacity: 1;
+    transform: translateX(0);
+}
+
+/* Animations */
+@keyframes bounce {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
+}
+
+@keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.5; }
+}
+
+@keyframes gentle-bounce {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
+}
+
+@keyframes gentle-pulse {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.8; transform: scale(1.05); }
+}
+
+@keyframes flip-in {
+    0% { transform: rotateY(180deg); opacity: 0; }
+    100% { transform: rotateY(0); opacity: 1; }
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .names {
+        font-size: clamp(1.7rem, 6vw, 2.4rem);
+    }
+    
+    .section-title {
+        font-size: 2rem;
+    }
+    
+    .countdown-number {
+        font-size: 2rem;
+    }
+    
+    .countdown-container {
+        gap: 0.25rem;
+        max-width: 36rem;
+    }
+    
+
+    
+
+    
+    .events-container {
+        grid-template-columns: 1fr;
+        gap: 3.25rem; /* más espacio entre Ceremonia y Celebración */
+        padding: 0 1rem;
+    }
+    
+    .event-card {
+        margin-bottom: 1rem; /* separador adicional sutil */
+    }
+    
+    .party-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .carousel-item {
+        height: 200px;
+    }
+    
+    .carousel-btn {
+        width: 40px;
+        height: 40px;
+        font-size: 1rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .names {
+        font-size: clamp(1.4rem, 7vw, 1.9rem);
+    }
+    
+    .quote {
+        font-size: 1rem;
+    }
+    
+    .countdown-number {
+        font-size: 1.8rem;
+    }
+    
+    .countdown-container {
+        gap: 0.125rem;
+        max-width: 28rem;
+    }
+    
+
+    
+
+
+    .carousel-item {
+        height: 100px;
+    }
+    
+    .modal-content {
+        padding: 1.5rem;
+    }
+    
+    .modal-names {
+        font-size: 1.5rem;
+    }
+}
+
+/* Centrado y ancho máximo para el contenido principal */
+.main-center {
+    max-width: 1100px;
+    margin: 0 auto;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    box-sizing: border-box;
+}
+
+@media (max-width: 768px) {
+    .main-center {
+        max-width: 100%;
+        margin: 0;
+        padding: 0 1rem;
+    }
+}
+
+/* Carrusel: ajusta para 6 imágenes, no requiere cambios en CSS, solo en HTML */
+
+/* Modern Icon Animations and Styles */
+.icon-speaker,
+.icon-music,
+.event-icon,
+.camera-icon,
+.party-icon,
+.gift-icon,
+.whatsapp-icon {
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Speaker Icon Animation */
+.icon-speaker svg {
+    transition: all 0.3s ease;
+    transform-origin: center;
+}
+
+.btn-music-modern:hover .icon-speaker svg {
+    transform: scale(1.1) rotate(5deg);
+    animation: speakerPulse 0.6s ease-in-out;
+}
+
+@keyframes speakerPulse {
+    0%, 100% { transform: scale(1.1) rotate(5deg); }
+    50% { transform: scale(1.2) rotate(-2deg); }
+}
+
+/* Modern Heart Icon with Animation */
+.modal-icon svg,
+.event-icon svg {
+    transition: all 0.3s ease;
+}
+
+.modal-icon:hover svg,
+.event-card:hover .event-icon svg {
+    transform: scale(1.1);
+    animation: heartBeat 0.8s ease-in-out;
+}
+
+@keyframes heartBeat {
+    0%, 100% { transform: scale(1.1); }
+    25% { transform: scale(1.25); }
+    50% { transform: scale(1.1); }
+    75% { transform: scale(1.2); }
+}
+
+/* Music Icon Animation */
+.party-icon svg,
+.party-icon img {
+    transition: all 0.3s ease;
+}
+
+.party-card:hover .party-icon svg,
+.party-card:hover .party-icon img {
+    transform: rotate(6deg) scale(1.1);
+    animation: musicBounce 0.7s ease-in-out;
+}
+
+@keyframes musicBounce {
+    0%, 100% { transform: rotate(6deg) scale(1.1); }
+    25% { transform: rotate(-3deg) scale(1.15); }
+    50% { transform: rotate(8deg) scale(1.05); }
+    75% { transform: rotate(-1deg) scale(1.12); }
+}
+
+/* Gift Box Animation */
+.gift-icon svg,
+.gift-icon img {
+    transition: all 0.3s ease;
+}
+
+.gifts-container:hover .gift-icon svg,
+.gifts-container:hover .gift-icon img {
+    transform: translateY(-5px) scale(1.1);
+    animation: giftFloat 1s ease-in-out infinite alternate;
+}
+
+@keyframes giftFloat {
+    0% { transform: translateY(-5px) scale(1.1); }
+    100% { transform: translateY(-10px) scale(1.1) rotate(2deg); }
+}
+
+/* WhatsApp Icon Animation */
+.whatsapp-icon svg {
+    transition: all 0.3s ease;
+}
+
+.rsvp-container:hover .whatsapp-icon svg {
+    transform: scale(1.1);
+    animation: phoneRing 0.5s ease-in-out 3;
+}
+
+@keyframes phoneRing {
+    0%, 100% { transform: scale(1.1) rotate(0deg); }
+    25% { transform: scale(1.15) rotate(-5deg); }
+    75% { transform: scale(1.15) rotate(5deg); }
+}
+
+/* Camera Icon Animation */
+.camera-icon {
+    transition: all 0.3s ease;
+}
+
+.gallery-container:hover .camera-icon {
+    transform: scale(1.05);
+    animation: cameraFlash 1.2s ease-in-out;
+}
+
+@keyframes cameraFlash {
+    0%, 100% { box-shadow: 0 4px 18px -6px rgba(255, 226, 122, 0.18); }
+    15% { box-shadow: 0 4px 25px 0px rgba(255, 255, 255, 0.8); }
+    30% { box-shadow: 0 4px 18px -6px rgba(255, 226, 122, 0.18); }
+}
+
+/* Modern Black Icons with White Accents */
+.modern-icon {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.modern-icon::before {
+    content: '';
+    position: absolute;
+    top: -2px;
+    left: -2px;
+    right: -2px;
+    bottom: -2px;
+    background: linear-gradient(45deg, #000, #333, #000);
+    border-radius: inherit;
+    z-index: -1;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.modern-icon:hover::before {
+    opacity: 0.1;
+}
+
+/* Enhanced hover effects for all icons */
+.btn-wedding:hover,
+.event-card:hover,
+.party-card:hover,
+.gifts-container:hover,
+.rsvp-container:hover,
+.gallery-container:hover {
+    transform: translateY(-2px);
+}
+
+/* Scroll indicator animation enhancement */
+.scroll-indicator {
+    animation: scrollBounce 2s ease-in-out infinite;
+}
+
+@keyframes scrollBounce {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(10px); }
+}
+
+/* Texto sobre fondo oscuro (modal de bienvenida) sigue en blanco */
+.modal-subtitle {
+    color: #fff !important;
+}
+
+/* Footer sobre fondo crema: nombre en rosa oscuro, texto en tono oscuro principal */
+.footer-content p {
+    color: #5E4A4D !important;
+}
+.footer-content h3 {
+    color: #A95F73 !important;
+}
+.footer-date {
+    color: #D98FA3 !important;
+}
+
+/* Textos sobre las secciones en tono oscuro principal para contraste */
+.event-details h4,
+.hashtag {
+    color: #5E4A4D !important;
+}
+.party-card h3 {
+    color: #A95F73 !important;
+}
+
+/* Show carousel navigation buttons */
+.carousel-btn,
+.carousel-prev,
+.carousel-next,
+button[id*="nextBtn"],
+button[id*="prevBtn"],
+button[class*="carousel"] {
+    display: flex !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    pointer-events: auto !important;
+    position: absolute !important;
+}
+
+/* Ensure music icon is visible */
+.party-icon svg {
+    display: block !important;
+    visibility: visible !important;
+}
+
+/* Tweak hero layout spacing */
+.hero-text .date { margin-bottom: 2rem; }
+.hero-text .names { margin-bottom: 1rem; }
+.quote { margin-top: 1.5rem; padding-top: 0.25rem; }
+
+/* Bowtie subtle animation */
+.bowtie-icon svg {
+    transition: transform 0.3s ease;
+}
+.bowtie-icon:hover svg {
+    transform: scale(1.06) rotate(1deg);
+}
+
+@media (max-width: 768px) {
+    .carousel-track-container {
+        border: none; /* quitar recuadro en móvil */
+    }
+    .carousel-track-container::before,
+    .carousel-track-container::after {
+        content: none !important; /* sin pseudo-elementos en móvil */
+    }
+}
+
+/* Permitir que las sombras no se recorten en el carrusel */
+.carousel-track-container { overflow: hidden; }
+.carousel-track { overflow: hidden; }
+
+@media (max-width: 768px) {
+    .framed-photo { margin: 16px auto 24px; max-width: calc(100% - 32px); }
+}
+
+.framed-photo:hover { box-shadow: 0 15px 30px rgba(169,95,115,0.35); }
+
+
+
+/* Efecto “sobresalir” del centro solo en desktop */
+@media (min-width: 769px) {
+    .carousel-item.is-center { z-index: 2; }
+    .carousel-item.is-center .framed-photo {
+        transform: scale(1.12) rotate(-0.2deg);
+        box-shadow: 0 34px 68px rgba(169,95,115,0.45);
+    }
+}
+
+@media (max-width: 768px) {
+    .party-grid {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+        padding: 0 1rem;
+    }
+    .party-card {
+        max-width: 320px;
+        margin: 0 auto;
+        border-radius: 2rem;
+        overflow: visible;
+        word-break: break-word;
+    }
+    .party-card p,
+    .party-card h3 {
+        overflow-wrap: anywhere;
+    }
+}
+
+
+/* Fondos por sección según la paleta XV: blanco crema y blanco cálido alternos */
+.countdown-section,
+.gallery-section,
+.gifts-section,
+.footer {
+    background-color: #FFF9F2 !important;
+}
+
+.events-section,
+.party-section,
+.rsvp-section {
+    background-color: #F8E1E7 !important;
+}
+
+/* Portada (desktop): usar imagen por defecto y altura de la sección base */
